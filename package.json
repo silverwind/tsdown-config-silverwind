@@ -1,7 +1,7 @@
 {
   "name": "tsdown-config-silverwind",
   "version": "1.0.1",
-  "description": "Shared vite configuration",
+  "description": "Shared tsdown configuration",
   "author": "silverwind <me@silverwind.io>",
   "repository": "silverwind/tsdown-config-silverwind",
   "license": "BSD-2-Clause",
