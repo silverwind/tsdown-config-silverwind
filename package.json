@@ -14,7 +14,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=24"
+    "node": ">=20"
   },
   "devDependencies": {
     "@types/node": "24.5.2",
