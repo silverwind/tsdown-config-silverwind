@@ -30,9 +30,7 @@ test-update: node_modules build
 build: node_modules $(DIST_FILES)
 
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json tsdown.config.ts
-	echo $(PWD)
-	ls -la
-	npx tsdown -c tsdown.config.ts
+	npx tsdown
 
 .PHONY: publish
 publish: node_modules
