@@ -11,6 +11,10 @@ const base = ({url, ...other}: CustomConfig): Options => ({
 export function nodeLib({url, ...other}: CustomConfig): Options {
   return base({
     platform: "node",
+    report: {
+      gzip: false,
+      brotli: false,
+    },
     url,
     ...other,
   });
