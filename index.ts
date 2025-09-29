@@ -29,7 +29,7 @@ function fixEntry(entry: Options["entry"]): Options["entry"] {
   }
 }
 
-const base = ({url, entry, report, loader, ...other}: CustomConfig): Options => {
+const base = ({url, entry, report, loader, outputOptions, ...other}: CustomConfig): Options => {
   // entry is a glob pattern and tsdown does not accept backslashes on windows for it
   // https://github.com/rolldown/tsdown/issues/518
   return {
@@ -45,6 +45,10 @@ const base = ({url, entry, report, loader, ...other}: CustomConfig): Options => 
       ".xml": "text",
       ".txt": "text",
       ...loader,
+    },
+    outputOptions: {
+      legalComments: "none",
+      ...outputOptions,
     },
     ...other,
   } satisfies Options;
