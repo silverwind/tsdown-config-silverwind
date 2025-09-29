@@ -30,8 +30,6 @@ function fixEntry(entry: Options["entry"]): Options["entry"] {
 }
 
 const base = ({url, entry, report, loader, outputOptions, ...other}: CustomConfig): Options => {
-  // entry is a glob pattern and tsdown does not accept backslashes on windows for it
-  // https://github.com/rolldown/tsdown/issues/518
   return {
     entry: fixEntry(entry ?? fileURLToPath(new URL("index.ts", url))),
     report: typeof report === "boolean" ? report : {
