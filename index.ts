@@ -8,16 +8,32 @@ function isObject(obj: any): boolean {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-const base = ({url, report, loader, ...other}: CustomConfig): Options => {
+// entry is a glob pattern and tsdown does not accept backslashes on windows for it
+// https://github.com/rolldown/tsdown/issues/518
+function fixWindowsPath(entry: string): string {
+  return entry.replaceAll("\\", "/");
+}
+
+function fixEntry(entry: Options["entry"]): Options["entry"] {
+  if (platform() !== "win32") return entry;
+  if (typeof entry === "string") {
+    return fixWindowsPath(entry);
+  } else if (Array.isArray(entry)) {
+    return entry.map(entry => fixWindowsPath(entry));
+  } else if (isObject(entry)) {
+    return Object.fromEntries(Object.entries(entry).map(([key, value]) => {
+      return [key, fixWindowsPath(value)];
+    }));
+  } else {
+    return entry;
+  }
+}
+
+const base = ({url, entry, report, loader, ...other}: CustomConfig): Options => {
   // entry is a glob pattern and tsdown does not accept backslashes on windows for it
   // https://github.com/rolldown/tsdown/issues/518
-  let entry = fileURLToPath(new URL("index.ts", url));
-  if (platform() === "win32") {
-    entry = entry.replaceAll("\\", "/");
-  }
-
   return {
-    entry,
+    entry: fixEntry(entry ?? fileURLToPath(new URL("index.ts", url))),
     report: typeof report === "boolean" ? report : {
       gzip: false,
       brotli: false,
