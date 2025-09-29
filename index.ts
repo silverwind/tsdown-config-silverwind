@@ -65,3 +65,11 @@ export function webLib({url, ...other}: CustomConfig): Options {
     ...other,
   });
 }
+
+export function nodeCli({url, ...other}: CustomConfig): Options {
+  return nodeLib({
+    platform: "node",
+    url,
+    ...other,
+  });
+}
