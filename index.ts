@@ -29,7 +29,7 @@ function fixEntry(entry: Options["entry"]): Options["entry"] {
   }
 }
 
-const base = ({url, entry, report, loader, outputOptions, ...other}: CustomConfig): Options => {
+export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): Options {
   return {
     entry: fixEntry(entry ?? fileURLToPath(new URL("index.ts", url))),
     report: typeof report === "boolean" ? report : {
@@ -50,7 +50,7 @@ const base = ({url, entry, report, loader, outputOptions, ...other}: CustomConfi
     },
     ...other,
   } satisfies Options;
-};
+}
 
 export function nodeLib({url, ...other}: CustomConfig): Options {
   return base({
