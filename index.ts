@@ -57,6 +57,8 @@ const base = ({url, entry, report, loader, outputOptions, ...other}: CustomConfi
 export function nodeLib({url, ...other}: CustomConfig): Options {
   return base({
     platform: "node",
+    sourcemap: false,
+    minify: false,
     url,
     ...other,
   });
@@ -65,6 +67,8 @@ export function nodeLib({url, ...other}: CustomConfig): Options {
 export function webLib({url, ...other}: CustomConfig): Options {
   return base({
     platform: "browser",
+    sourcemap: true,
+    minify: false,
     url,
     ...other,
   });
@@ -73,6 +77,8 @@ export function webLib({url, ...other}: CustomConfig): Options {
 export function nodeCli({url, ...other}: CustomConfig): Options {
   return nodeLib({
     platform: "node",
+    sourcemap: false,
+    minify: true,
     url,
     ...other,
   });
