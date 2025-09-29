@@ -23,8 +23,8 @@
     "tsdown": "0.15.5",
     "typescript": "5.9.2",
     "typescript-config-silverwind": "10.0.2",
-    "updates": "16.7.2",
-    "versions": "13.1.2",
+    "updates": "16.7.3",
+    "versions": "13.2.0",
     "vitest": "3.2.4",
     "vitest-config-silverwind": "10.2.0"
   }
