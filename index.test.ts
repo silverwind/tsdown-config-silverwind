@@ -1,6 +1,11 @@
-import {nodeLib} from "./index.ts";
+import {nodeLib, webLib} from "./index.ts";
 
 test("nodeLib", () => {
   const cfg = nodeLib({url: import.meta.url});
   expect(cfg.platform).equal("node");
+});
+
+test("webLib", () => {
+  const cfg = webLib({url: import.meta.url});
+  expect(cfg.platform).equal("browser");
 });
