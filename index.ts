@@ -48,6 +48,7 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
       legalComments: "none",
       ...outputOptions,
     },
+    fixedExtension: false,
     ...other,
   } satisfies UserConfig;
 }
