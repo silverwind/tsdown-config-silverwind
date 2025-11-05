@@ -1,8 +1,8 @@
 import {fileURLToPath} from "node:url";
 import {platform} from "node:os";
-import type {Options} from "tsdown";
+import type {UserConfig} from "tsdown";
 
-export type CustomConfig = Options & {url: string};
+export type CustomConfig = UserConfig & {url: string};
 
 function isObject(obj: any): boolean {
   return Object.prototype.toString.call(obj) === "[object Object]";
@@ -14,7 +14,7 @@ function fixWindowsPath(entry: string): string {
   return entry.replaceAll("\\", "/");
 }
 
-function fixEntry(entry: Options["entry"]): Options["entry"] {
+function fixEntry(entry: UserConfig["entry"]): UserConfig["entry"] {
   if (platform() !== "win32") return entry;
   if (typeof entry === "string") {
     return fixWindowsPath(entry);
@@ -29,7 +29,7 @@ function fixEntry(entry: Options["entry"]): Options["entry"] {
   }
 }
 
-export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): Options {
+export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): UserConfig {
   return {
     entry: fixEntry(entry ?? fileURLToPath(new URL("index.ts", url))),
     report: typeof report === "boolean" ? report : {
@@ -49,10 +49,10 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
       ...outputOptions,
     },
     ...other,
-  } satisfies Options;
+  } satisfies UserConfig;
 }
 
-export function nodeLib({url, ...other}: CustomConfig): Options {
+export function nodeLib({url, ...other}: CustomConfig): UserConfig {
   return base({
     platform: "node",
     sourcemap: false,
@@ -62,7 +62,7 @@ export function nodeLib({url, ...other}: CustomConfig): Options {
   });
 }
 
-export function webLib({url, ...other}: CustomConfig): Options {
+export function webLib({url, ...other}: CustomConfig): UserConfig {
   return base({
     platform: "browser",
     sourcemap: true,
@@ -72,7 +72,7 @@ export function webLib({url, ...other}: CustomConfig): Options {
   });
 }
 
-export function nodeCli({url, ...other}: CustomConfig): Options {
+export function nodeCli({url, ...other}: CustomConfig): UserConfig {
   return nodeLib({
     platform: "node",
     sourcemap: false,
