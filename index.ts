@@ -15,6 +15,7 @@ function fixWindowsPath(entry: string): string {
 }
 
 function fixEntry(entry: UserConfig["entry"]): UserConfig["entry"] {
+  if (!entry) return entry;
   if (platform() !== "win32") return entry;
   if (typeof entry === "string") {
     return fixWindowsPath(entry);
