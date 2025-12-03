@@ -67,6 +67,7 @@ export function nodeLib({url, ...other}: CustomConfig): UserConfig {
 export function webLib({url, ...other}: CustomConfig): UserConfig {
   return base({
     platform: "browser",
+    target: "esnext",
     sourcemap: true,
     minify: false,
     url,
