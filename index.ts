@@ -51,15 +51,20 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
     },
     fixedExtension: false,
     failOnWarn: true,
+    globImport: false,
     ...other,
   } satisfies UserConfig;
 }
 
-export function nodeLib({url, ...other}: CustomConfig): UserConfig {
+export function nodeLib({url, outputOptions, ...other}: CustomConfig): UserConfig {
   return base({
     platform: "node",
     sourcemap: false,
     minify: false,
+    outputOptions: {
+      inlineDynamicImports: true,
+      ...outputOptions,
+    },
     url,
     ...other,
   });
@@ -76,11 +81,15 @@ export function webLib({url, ...other}: CustomConfig): UserConfig {
   });
 }
 
-export function nodeCli({url, ...other}: CustomConfig): UserConfig {
+export function nodeCli({url, outputOptions, ...other}: CustomConfig): UserConfig {
   return nodeLib({
     platform: "node",
     sourcemap: false,
     minify: true,
+    outputOptions: {
+      inlineDynamicImports: true,
+      ...outputOptions,
+    },
     url,
     ...other,
   });
