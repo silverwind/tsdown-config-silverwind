@@ -50,6 +50,7 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
       ...outputOptions,
     },
     fixedExtension: false,
+    failOnWarn: true,
     ...other,
   } satisfies UserConfig;
 }
