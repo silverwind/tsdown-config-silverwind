@@ -1,38 +1,15 @@
 import {fileURLToPath} from "node:url";
-import {platform} from "node:os";
 import type {UserConfig} from "tsdown";
 
-export type CustomConfig = UserConfig & {url: string};
+type CustomConfig = UserConfig & {url: string};
 
-function isObject(obj: any): boolean {
+function isObject<T = Record<string, any>>(obj: any): obj is T {
   return Object.prototype.toString.call(obj) === "[object Object]";
-}
-
-// entry is a glob pattern and tsdown does not accept backslashes on windows for it
-// https://github.com/rolldown/tsdown/issues/518
-function fixWindowsPath(entry: string): string {
-  return entry.replaceAll("\\", "/");
-}
-
-function fixEntry(entry: UserConfig["entry"]): UserConfig["entry"] {
-  if (!entry) return entry;
-  if (platform() !== "win32") return entry;
-  if (typeof entry === "string") {
-    return fixWindowsPath(entry);
-  } else if (Array.isArray(entry)) {
-    return entry.map(entry => fixWindowsPath(entry));
-  } else if (isObject(entry)) {
-    return Object.fromEntries(Object.entries(entry).map(([key, value]) => {
-      return [key, fixWindowsPath(value)];
-    }));
-  } else {
-    return entry;
-  }
 }
 
 export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): UserConfig {
   return {
-    entry: fixEntry(entry ?? fileURLToPath(new URL("index.ts", url))),
+    entry: entry ?? fileURLToPath(new URL("index.ts", url)),
     report: typeof report === "boolean" ? report : {
       gzip: false,
       brotli: false,
