@@ -7,6 +7,16 @@ function isObject<T = Record<string, any>>(obj: any): obj is T {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
+function isSingleEntry(entry: UserConfig["entry"]) {
+  if (Array.isArray(entry)) {
+    return entry.length === 1;
+  } else if (isObject(entry)) {
+    return Object.keys(entry).length === 1;
+  } else {
+    return true;
+  }
+}
+
 export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
@@ -33,13 +43,14 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
   } satisfies UserConfig;
 }
 
-export function nodeLib({url, outputOptions, ...other}: CustomConfig): UserConfig {
+export function nodeLib({url, outputOptions, entry, ...other}: CustomConfig): UserConfig {
   return base({
+    entry,
     platform: "node",
     sourcemap: false,
     minify: false,
     outputOptions: {
-      inlineDynamicImports: true,
+      ...(isSingleEntry(entry) && {inlineDynamicImports: true}),
       ...outputOptions,
     },
     url,
@@ -58,13 +69,14 @@ export function webLib({url, ...other}: CustomConfig): UserConfig {
   });
 }
 
-export function nodeCli({url, outputOptions, ...other}: CustomConfig): UserConfig {
+export function nodeCli({url, outputOptions, entry, ...other}: CustomConfig): UserConfig {
   return nodeLib({
+    entry,
     platform: "node",
     sourcemap: false,
     minify: true,
     outputOptions: {
-      inlineDynamicImports: true,
+      ...(isSingleEntry(entry) && {inlineDynamicImports: true}),
       ...outputOptions,
     },
     url,
