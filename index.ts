@@ -30,6 +30,7 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
     fixedExtension: false,
     failOnWarn: true,
     globImport: false,
+    inlineOnly: false, // suppress warning " ERROR  Consider adding inlineOnly option to avoid unintended bundling of dependencies, or set inlineOnly: false to disable this warning." related to dts.
     ...other,
   } satisfies UserConfig;
 }
