@@ -7,16 +7,6 @@ function isObject<T = Record<string, any>>(obj: any): obj is T {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-function isSingleEntry(entry: UserConfig["entry"]) {
-  if (Array.isArray(entry)) {
-    return entry.length === 1;
-  } else if (isObject(entry)) {
-    return Object.keys(entry).length === 1;
-  } else {
-    return true;
-  }
-}
-
 export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
@@ -34,6 +24,7 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
     },
     outputOptions: {
       legalComments: "none",
+      codeSplitting: false,
       ...outputOptions,
     },
     fixedExtension: false,
@@ -50,7 +41,6 @@ export function nodeLib({url, outputOptions, entry, ...other}: CustomConfig): Us
     sourcemap: false,
     minify: false,
     outputOptions: {
-      ...(isSingleEntry(entry) && {inlineDynamicImports: true}),
       ...outputOptions,
     },
     url,
@@ -76,7 +66,6 @@ export function nodeCli({url, outputOptions, entry, ...other}: CustomConfig): Us
     sourcemap: false,
     minify: true,
     outputOptions: {
-      ...(isSingleEntry(entry) && {inlineDynamicImports: true}),
       ...outputOptions,
     },
     url,
