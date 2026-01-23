@@ -34,15 +34,12 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
   } satisfies UserConfig;
 }
 
-export function nodeLib({url, outputOptions, entry, ...other}: CustomConfig): UserConfig {
+export function nodeLib({url, entry, ...other}: CustomConfig): UserConfig {
   return base({
     entry,
     platform: "node",
     sourcemap: false,
     minify: false,
-    outputOptions: {
-      ...outputOptions,
-    },
     url,
     ...other,
   });
@@ -59,15 +56,12 @@ export function webLib({url, ...other}: CustomConfig): UserConfig {
   });
 }
 
-export function nodeCli({url, outputOptions, entry, ...other}: CustomConfig): UserConfig {
+export function nodeCli({url, entry, ...other}: CustomConfig): UserConfig {
   return nodeLib({
     entry,
     platform: "node",
     sourcemap: false,
     minify: true,
-    outputOptions: {
-      ...outputOptions,
-    },
     url,
     ...other,
   });
