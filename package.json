@@ -20,16 +20,16 @@
     "tsdown": "*"
   },
   "devDependencies": {
-    "@types/node": "25.0.10",
-    "@typescript/native-preview": "7.0.0-dev.20260122.4",
+    "@types/node": "25.2.0",
+    "@typescript/native-preview": "7.0.0-dev.20260203.1",
     "eslint": "9.39.2",
-    "eslint-config-silverwind": "117.0.3",
+    "eslint-config-silverwind": "120.0.1",
     "tsdown": "0.20.1",
     "typescript": "5.9.3",
     "typescript-config-silverwind": "14.0.0",
-    "updates": "17.0.8",
-    "versions": "14.0.3",
+    "updates": "17.1.0",
+    "versions": "14.1.0",
     "vitest": "4.0.18",
-    "vitest-config-silverwind": "10.6.0"
+    "vitest-config-silverwind": "10.6.1"
   }
 }
