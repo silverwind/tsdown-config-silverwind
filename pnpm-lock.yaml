@@ -20,6 +20,9 @@ importers:
       eslint-config-silverwind:
         specifier: 120.1.2
         version: 120.1.2(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
+      jest-extended:
+        specifier: 7.0.0
+        version: 7.0.0(typescript@5.9.3)
       tsdown:
         specifier: 0.20.1
         version: 0.20.1(@typescript/native-preview@7.0.0-dev.20260203.1)(typescript@5.9.3)
