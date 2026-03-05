@@ -17,7 +17,7 @@ function isSingleEntry(entry: UserConfig["entry"]) {
   }
 }
 
-export function base({url, entry, report, loader, outputOptions, ...other}: CustomConfig): UserConfig {
+export function base({url, entry, report, loader, outputOptions, deps, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
     report: typeof report === "boolean" ? report : {
@@ -33,13 +33,13 @@ export function base({url, entry, report, loader, outputOptions, ...other}: Cust
       ...loader,
     },
     outputOptions: {
-      legalComments: "none",
+      comments: {legal: false},
       ...outputOptions,
     },
     fixedExtension: false,
     failOnWarn: true,
     globImport: false,
-    inlineOnly: false, // suppress warning " ERROR  Consider adding inlineOnly option to avoid unintended bundling of dependencies, or set inlineOnly: false to disable this warning." related to dts.
+    deps: {onlyAllowBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
     ...other,
   } satisfies UserConfig;
 }
