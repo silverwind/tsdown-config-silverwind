@@ -34,12 +34,12 @@ export function base({url, entry, report, loader, outputOptions, deps, ...other}
     },
     outputOptions: {
       comments: {legal: false},
-      ...outputOptions,
+      ...(isObject(outputOptions) && outputOptions),
     },
     fixedExtension: false,
     failOnWarn: true,
     globImport: false,
-    deps: {onlyAllowBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
+    deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
     ...other,
   } satisfies UserConfig;
 }
@@ -52,7 +52,7 @@ export function nodeLib({url, entry, outputOptions, ...other}: CustomConfig): Us
     minify: false,
     outputOptions: {
       ...(isSingleEntry(entry) && {codeSplitting: false}),
-      ...outputOptions,
+      ...(isObject(outputOptions) && outputOptions),
     },
     url,
     ...other,
@@ -78,7 +78,7 @@ export function nodeCli({url, entry, outputOptions, ...other}: CustomConfig): Us
     minify: true,
     outputOptions: {
       ...(isSingleEntry(entry) && {codeSplitting: false}),
-      ...outputOptions,
+      ...(isObject(outputOptions) && outputOptions),
     },
     url,
     ...other,
