@@ -39,6 +39,7 @@ export function base({url, entry, report, loader, outputOptions, deps, ...other}
     fixedExtension: false,
     failOnWarn: true,
     globImport: false,
+    dts: {tsgo: true},
     deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
     ...other,
   } satisfies UserConfig;
