@@ -1,6 +1,13 @@
 import {fileURLToPath} from "node:url";
 import type {UserConfig} from "tsdown";
 
+// suppress experimental warning from rolldown-plugin-dts
+const origWarn = console.warn;
+console.warn = (...args: unknown[]) => {
+  if (typeof args[0] === "string" && args[0].includes("`tsgo` option is experimental")) return;
+  origWarn(...args);
+};
+
 type CustomConfig = UserConfig & {url: string};
 
 function isObject<T = Record<string, any>>(obj: any): obj is T {
