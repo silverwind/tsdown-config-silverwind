@@ -39,8 +39,8 @@ importers:
         specifier: 2.0.1
         version: 2.0.1(prettier@3.8.1)
       versions:
-        specifier: 14.2.6
-        version: 14.2.6
+        specifier: 14.3.1
+        version: 14.3.1
       vitest:
         specifier: 4.1.2
         version: 4.1.2(@types/node@25.5.0)(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0))
@@ -1144,8 +1144,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  versions@14.2.6:
-    resolution: {integrity: sha512-fqDk+IUTj1Ng1O6ElpVgDtlyVT2KxdRhc9o3psFceSqeRyw9Qf0SojW+88gvkSI7LcU7a5vICKVoHZOFuBlAww==}
+  versions@14.3.1:
+    resolution: {integrity: sha512-goCSxgrE0dWs1lOBgvdfQEaSYHlY9ogHofsAZ9KLTp10uvkm/TlZY4/I7cl2/n80tmZFSCcnhfhlE+9CEuTrcg==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2225,7 +2225,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  versions@14.2.6: {}
+  versions@14.3.1: {}
 
   vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0):
     dependencies:
