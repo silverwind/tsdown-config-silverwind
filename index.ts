@@ -56,7 +56,6 @@ export function nodeLib({url, entry, outputOptions, ...other}: CustomConfig): Us
   return base({
     entry,
     platform: "node",
-    sourcemap: false,
     minify: false,
     outputOptions: {
       ...(isSingleEntry(entry) && {codeSplitting: false}),
@@ -71,7 +70,6 @@ export function webLib({url, ...other}: CustomConfig): UserConfig {
   return base({
     platform: "browser",
     target: "esnext",
-    sourcemap: true,
     minify: false,
     url,
     ...other,
@@ -82,7 +80,6 @@ export function nodeCli({url, entry, outputOptions, ...other}: CustomConfig): Us
   return nodeLib({
     entry,
     platform: "node",
-    sourcemap: false,
     minify: true,
     outputOptions: {
       ...(isSingleEntry(entry) && {codeSplitting: false}),
