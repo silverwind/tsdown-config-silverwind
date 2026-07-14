@@ -1,6 +1,6 @@
 {
   "name": "tsdown-config-silverwind",
-  "version": "3.0.5",
+  "version": "4.0.0",
   "description": "Shared tsdown configuration",
   "author": "silverwind <me@silverwind.io>",
   "repository": "silverwind/tsdown-config-silverwind",
