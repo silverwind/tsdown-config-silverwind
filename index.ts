@@ -1,18 +1,12 @@
 import {fileURLToPath} from "node:url";
 import type {UserConfig} from "tsdown";
 
-// exact experimental warnings emitted by rolldown-plugin-dts, the first by
-// versions before 0.27 which consumers may still use via older tsdown
-const suppressedWarnings = new Set([
-  "The `tsgo` option is experimental and may change in the future.",
-  "TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.",
-]);
-
-const origWarn = console.warn;
-console.warn = (...args: unknown[]) => {
-  if (typeof args[0] === "string" && suppressedWarnings.has(args[0])) return;
-  origWarn(...args);
-};
+// experimental warnings emitted by rolldown-plugin-dts, dropped via tsdown's
+// suppressWarnings before failOnWarn turns them into errors
+const suppressWarnings = [
+  "The `tsgo` option is experimental",
+  "TypeScript 7.0 does not yet have a stable API",
+];
 
 type CustomConfig = UserConfig & {url: string};
 
@@ -51,6 +45,7 @@ export function base({url, entry, report, loader, outputOptions, deps, ...other}
     },
     fixedExtension: false,
     failOnWarn: true,
+    suppressWarnings,
     globImport: false,
     dts: {tsgo: true},
     deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
