@@ -4,7 +4,6 @@ import type {UserConfig} from "tsdown";
 // experimental warnings emitted by rolldown-plugin-dts, dropped via tsdown's
 // suppressWarnings before failOnWarn turns them into errors
 const suppressWarnings = [
-  "The `tsgo` option is experimental",
   "TypeScript 7.0 does not yet have a stable API",
 ];
 
