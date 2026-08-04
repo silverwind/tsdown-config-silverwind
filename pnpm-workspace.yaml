@@ -4,3 +4,4 @@ ignoreScripts: true
 minimumReleaseAge: 0
 strictDepBuilds: false
 confirmModulesPurge: false
+verifyDepsBeforeRun: false
