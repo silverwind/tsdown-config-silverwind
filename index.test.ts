@@ -3,6 +3,7 @@ import {nodeLib, webLib, nodeCli} from "./index.ts";
 test("nodeLib", () => {
   const cfg = nodeLib({url: import.meta.url});
   expect(cfg.platform).equal("node");
+  expect(cfg.checks?.pluginTimings).equal(false);
 });
 
 test("webLib", () => {
