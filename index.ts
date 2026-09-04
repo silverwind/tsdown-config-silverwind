@@ -29,7 +29,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     report: typeof report === "boolean" ? report : {
       gzip: false,
       brotli: false,
-      ...(isObject(report) && {report}),
+      ...(isObject(report) && report),
     },
     loader: {
       ".svg": "text",
@@ -47,7 +47,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     suppressWarnings,
     checks: {pluginTimings: false, ...checks},
     globImport: false,
-    dts: {tsgo: true},
+    dts: {generator: "tsgo"},
     deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
     ...other,
   } satisfies UserConfig;
