@@ -45,7 +45,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     fixedExtension: false,
     failOnWarn: true,
     suppressWarnings,
-    checks: {pluginTimings: false, ...checks},
+    checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
     dts: {generator: "tsgo"},
     deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies

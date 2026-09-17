@@ -4,6 +4,7 @@ test("nodeLib", () => {
   const cfg = nodeLib({url: import.meta.url});
   expect(cfg.platform).equal("node");
   expect(cfg.checks?.pluginTimings).equal(false);
+  expect(cfg.checks?.moduleLevelDirective).equal(false);
 });
 
 test("webLib", () => {
