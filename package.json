@@ -16,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "packageManager": "pnpm@12.5.1",
+  "packageManager": "pnpm@12.6.0",
   "engines": {
     "node": ">=22"
   },
@@ -27,15 +27,15 @@
     "@types/node": "26.6.2",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "eslint": "10.11.0",
-    "eslint-config-silverwind": "150.0.1",
+    "eslint-config-silverwind": "151.0.0",
     "jest-extended": "7.0.0",
     "tsdown": "0.23.0",
     "typescript": "6.0.3",
-    "typescript-config-silverwind": "20.0.4",
+    "typescript-config-silverwind": "21.0.0",
     "updates": "19.0.0",
     "updates-config-silverwind": "4.0.6",
     "versions": "15.5.0",
-    "vitest": "5.0.1",
-    "vitest-config-silverwind": "12.0.3"
+    "vitest": "5.0.2",
+    "vitest-config-silverwind": "12.0.4"
   }
 }
