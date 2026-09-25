@@ -3,7 +3,10 @@
   "version": "4.1.1",
   "description": "Shared tsdown configuration",
   "author": "silverwind <me@silverwind.io>",
-  "repository": "silverwind/tsdown-config-silverwind",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silverwind/tsdown-config-silverwind.git"
+  },
   "license": "BSD-2-Clause",
   "type": "module",
   "sideEffects": false,
