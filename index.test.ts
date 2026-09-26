@@ -12,6 +12,9 @@ test("nodeLib", async () => {
     codeSplitting: false,
     banner: "x",
   });
+  for (const entry of ["src/*.ts", "src/{a,b}.ts", ["src/[ab].ts"], [{a: "a.ts", b: "b.ts"}], {"*": "src/*.ts"}]) {
+    expect(nodeLib({url: import.meta.url, entry}).outputOptions).not.toHaveProperty("codeSplitting");
+  }
 });
 
 test("webLib", () => {

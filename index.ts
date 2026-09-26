@@ -17,13 +17,14 @@ function mergeOutputOptions(defaults: Rolldown.OutputOptions, outputOptions: Use
   }
 }
 
-function isSingleEntry(entry: UserConfig["entry"]) {
+function isSingleEntry(entry: UserConfig["entry"]): boolean {
   if (Array.isArray(entry)) {
-    return entry.length === 1;
+    return entry.length === 1 && isSingleEntry(entry[0]);
   } else if (isObject(entry)) {
-    return Object.keys(entry).length === 1;
+    const keys = Object.keys(entry);
+    return keys.length === 1 && !keys[0].includes("*");
   } else {
-    return true;
+    return typeof entry !== "string" || !/[*?(]|\[.*\]|\{[^}]*(?:,|\.\.)/.test(entry); // approximates tinyglobby's isDynamicPattern, which tsdown uses to expand entries
   }
 }
 
