@@ -1,5 +1,5 @@
 import {fileURLToPath} from "node:url";
-import type {UserConfig} from "tsdown";
+import type {Rolldown, UserConfig} from "tsdown";
 
 const suppressWarnings = ["TypeScript 7.0 does not yet have a stable API"]; // experimental tsgo warning from rolldown-plugin-dts, fatal under failOnWarn
 
@@ -7,6 +7,14 @@ type CustomConfig = UserConfig & {url: string};
 
 function isObject(obj: any): obj is Record<string, any> {
   return Object.prototype.toString.call(obj) === "[object Object]";
+}
+
+function mergeOutputOptions(defaults: Rolldown.OutputOptions, outputOptions: UserConfig["outputOptions"]): UserConfig["outputOptions"] {
+  if (typeof outputOptions === "function") {
+    return (options, ...args) => outputOptions(Object.assign(options, defaults), ...args);
+  } else {
+    return {...defaults, ...(isObject(outputOptions) && outputOptions)};
+  }
 }
 
 function isSingleEntry(entry: UserConfig["entry"]) {
@@ -34,10 +42,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
       ".txt": "text",
       ...loader,
     },
-    outputOptions: {
-      comments: {legal: false},
-      ...(isObject(outputOptions) && outputOptions),
-    },
+    outputOptions: mergeOutputOptions({comments: {legal: false}}, outputOptions),
     fixedExtension: false,
     failOnWarn: true,
     suppressWarnings,
@@ -54,10 +59,7 @@ export function nodeLib({url, entry, outputOptions, ...other}: CustomConfig): Us
     entry,
     platform: "node",
     minify: false,
-    outputOptions: {
-      ...(isSingleEntry(entry) && {codeSplitting: false}),
-      ...(isObject(outputOptions) && outputOptions),
-    },
+    outputOptions: mergeOutputOptions(isSingleEntry(entry) ? {codeSplitting: false} : {}, outputOptions),
     url,
     ...other,
   });
