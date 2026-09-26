@@ -1,15 +1,11 @@
 import {fileURLToPath} from "node:url";
 import type {UserConfig} from "tsdown";
 
-// experimental warnings emitted by rolldown-plugin-dts, dropped via tsdown's
-// suppressWarnings before failOnWarn turns them into errors
-const suppressWarnings = [
-  "TypeScript 7.0 does not yet have a stable API",
-];
+const suppressWarnings = ["TypeScript 7.0 does not yet have a stable API"]; // experimental tsgo warning from rolldown-plugin-dts, fatal under failOnWarn
 
 type CustomConfig = UserConfig & {url: string};
 
-function isObject<T = Record<string, any>>(obj: any): obj is T {
+function isObject(obj: any): obj is Record<string, any> {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
@@ -48,9 +44,9 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
     dts: {generator: "tsgo"},
-    deps: {onlyBundle: false, ...deps}, // suppress warning about unintended bundling of dependencies
+    deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
-  } satisfies UserConfig;
+  };
 }
 
 export function nodeLib({url, entry, outputOptions, ...other}: CustomConfig): UserConfig {
@@ -67,26 +63,15 @@ export function nodeLib({url, entry, outputOptions, ...other}: CustomConfig): Us
   });
 }
 
-export function webLib({url, ...other}: CustomConfig): UserConfig {
+export function webLib(config: CustomConfig): UserConfig {
   return base({
     platform: "browser",
     target: "esnext",
     minify: false,
-    url,
-    ...other,
+    ...config,
   });
 }
 
-export function nodeCli({url, entry, outputOptions, ...other}: CustomConfig): UserConfig {
-  return nodeLib({
-    entry,
-    platform: "node",
-    minify: true,
-    outputOptions: {
-      ...(isSingleEntry(entry) && {codeSplitting: false}),
-      ...(isObject(outputOptions) && outputOptions),
-    },
-    url,
-    ...other,
-  });
+export function nodeCli(config: CustomConfig): UserConfig {
+  return nodeLib({minify: true, ...config});
 }
