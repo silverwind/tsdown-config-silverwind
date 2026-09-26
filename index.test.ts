@@ -5,6 +5,7 @@ test("nodeLib", () => {
   expect(cfg.platform).toBe("node");
   expect(cfg.checks!.pluginTimings).toBe(false);
   expect(cfg.checks!.moduleLevelDirective).toBe(false);
+  expect(nodeLib({url: import.meta.url, report: "ci-only"}).report).toBe("ci-only");
 });
 
 test("webLib", () => {

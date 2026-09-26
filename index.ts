@@ -22,7 +22,7 @@ function isSingleEntry(entry: UserConfig["entry"]) {
 export function base({url, entry, report, loader, outputOptions, deps, checks, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
-    report: typeof report === "boolean" ? report : {
+    report: typeof report === "boolean" || typeof report === "string" ? report : {
       gzip: false,
       brotli: false,
       ...(isObject(report) && report),
