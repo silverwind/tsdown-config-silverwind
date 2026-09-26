@@ -19,12 +19,12 @@ lint-fix: node_modules
 	pnpm exec tsgo
 
 .PHONY: test
-test: node_modules
+test: node_modules build
 	pnpm exec vitest
 	bun test --only-failures --concurrent
 
 .PHONY: test-update
-test-update: node_modules
+test-update: node_modules build
 	pnpm exec vitest -u
 
 .PHONY: build
