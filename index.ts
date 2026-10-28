@@ -1,8 +1,6 @@
 import {fileURLToPath} from "node:url";
 import type {Rolldown, UserConfig} from "tsdown";
 
-const suppressWarnings = ["TypeScript 7.0 does not yet have a stable API"]; // experimental tsgo warning from rolldown-plugin-dts, fatal under failOnWarn
-
 type CustomConfig = UserConfig & {url: string};
 
 function isObject(obj: any): obj is Record<string, any> {
@@ -46,10 +44,9 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     outputOptions: mergeOutputOptions({comments: {legal: false}}, outputOptions),
     fixedExtension: false,
     failOnWarn: true,
-    suppressWarnings,
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
-    dts: {generator: "tsgo"},
+    dts: true,
     deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
   };
