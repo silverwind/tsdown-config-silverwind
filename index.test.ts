@@ -3,7 +3,9 @@ import {nodeLib, webLib, nodeCli} from "./index.ts";
 const url = import.meta.url;
 
 test("nodeLib", async () => {
-  expect(nodeLib({url})).toMatchObject({platform: "node", dts: true, checks: {pluginTimings: false, moduleLevelDirective: false}});
+  expect(nodeLib({url})).toMatchObject({platform: "node", dts: {generator: "oxc"}, checks: {pluginTimings: false, moduleLevelDirective: false}});
+  expect(nodeLib({url, dts: false}).dts).toBe(false);
+  expect(nodeLib({url, dts: {emitDtsOnly: true}}).dts).toEqual({generator: "oxc", emitDtsOnly: true});
   expect(nodeLib({url, report: "ci-only"}).report).toBe("ci-only");
   const {outputOptions} = nodeLib({url, outputOptions: options => ({...options, banner: "x"})});
   expect(typeof outputOptions === "function" && await outputOptions({}, "es", {cjsDts: false})).toEqual({

@@ -26,7 +26,7 @@ function isSingleEntry(entry: UserConfig["entry"]): boolean {
   }
 }
 
-export function base({url, entry, report, loader, outputOptions, deps, checks, ...other}: CustomConfig): UserConfig {
+export function base({url, entry, report, loader, outputOptions, deps, checks, dts, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
     report: typeof report === "boolean" || typeof report === "string" ? report : {
@@ -46,7 +46,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, .
     failOnWarn: true,
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
-    dts: true,
+    dts: dts !== false && {generator: "oxc", ...(isObject(dts) && dts)},
     deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
   };
