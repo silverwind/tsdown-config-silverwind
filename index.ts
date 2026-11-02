@@ -1,3 +1,4 @@
+import {createRequire} from "node:module";
 import {fileURLToPath} from "node:url";
 import type {Rolldown, UserConfig} from "tsdown";
 
@@ -26,6 +27,14 @@ function isSingleEntry(entry: UserConfig["entry"]): boolean {
   }
 }
 
+function hasTypescriptApi(url: string): boolean {
+  try {
+    return Number.parseInt(createRequire(url)("typescript/package.json").version) < 7;
+  } catch {
+    return false;
+  }
+}
+
 export function base({url, entry, report, loader, outputOptions, deps, checks, dts, ...other}: CustomConfig): UserConfig {
   return {
     entry: entry ?? fileURLToPath(new URL("index.ts", url)),
@@ -46,7 +55,7 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, d
     failOnWarn: true,
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
-    dts: dts !== false && {generator: "oxc", ...(isObject(dts) && dts)},
+    dts: dts !== false && {generator: hasTypescriptApi(url) ? "tsc" : "oxc", ...(isObject(dts) && dts)}, // oxc needs isolatedDeclarations-compatible code, tsc needs TypeScript 6 or below
     deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
   };
