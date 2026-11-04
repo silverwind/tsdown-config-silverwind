@@ -27,11 +27,14 @@ function isSingleEntry(entry: UserConfig["entry"]): boolean {
   }
 }
 
-function hasTypescriptApi(url: string): boolean {
+function dtsGenerator(url: string): "tsc" | "tsgo" | "oxc" {
   try {
-    return Number.parseInt(createRequire(url)("typescript/package.json").version) < 7;
+    const [major, minor] = createRequire(url)("typescript/package.json").version.split(".").map(Number);
+    if (major < 7) return "tsc";
+    if (major === 7 && minor === 0) return "oxc";
+    return "tsgo";
   } catch {
-    return false;
+    return "oxc";
   }
 }
 
@@ -53,9 +56,10 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, d
     outputOptions: mergeOutputOptions({comments: {legal: false}}, outputOptions),
     fixedExtension: false,
     failOnWarn: true,
+    suppressWarnings: /^TypeScript Go is experimental/, // rolldown-plugin-dts warns on every tsgo build
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
-    dts: dts !== false && {generator: hasTypescriptApi(url) ? "tsc" : "oxc", ...(isObject(dts) && dts)}, // oxc needs isolatedDeclarations-compatible code, tsc needs TypeScript 6 or below
+    dts: dts !== false && {generator: dtsGenerator(url), ...(isObject(dts) && dts)}, // tsc needs TypeScript 6 or below, tsgo 7.1 or above, oxc needs isolatedDeclarations-compatible code
     deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
   };
