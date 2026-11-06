@@ -7,7 +7,7 @@ import type * as tsdown from "tsdown";
 import {nodeLib, webLib, nodeCli} from "./index.ts";
 
 const url = import.meta.url;
-const urlWithoutTypescript = "file:///without-typescript/index.ts";
+const urlWithoutTypescript = pathToFileURL("/without-typescript/index.ts").href;
 
 test("nodeLib", async () => {
   expect(nodeLib({url})).toMatchObject({platform: "node", checks: {pluginTimings: false, moduleLevelDirective: false}});
