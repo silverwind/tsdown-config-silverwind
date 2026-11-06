@@ -1,3 +1,5 @@
+packages:
+  - fixtures/*
 savePrefix: ''
 updateNotifier: false
 ignoreScripts: true

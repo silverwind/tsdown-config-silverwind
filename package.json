@@ -16,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "packageManager": "pnpm@12.16.1",
+  "packageManager": "pnpm@12.18.0",
   "engines": {
     "node": ">=22"
   },
@@ -25,9 +25,11 @@
   },
   "devDependencies": {
     "@types/node": "26.6.6",
+    "@types/pluralize": "0.0.33",
     "eslint": "10.14.0",
-    "eslint-config-silverwind": "155.2.0",
-    "tsdown": "0.23.5",
+    "eslint-config-silverwind": "157.0.0",
+    "pluralize": "8.0.0",
+    "tsdown": "0.23.7",
     "typescript": "7.0.2",
     "typescript-config-silverwind": "21.0.2",
     "updates": "20.0.0",

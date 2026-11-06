@@ -1,0 +1,8 @@
+{
+  "name": "ts71",
+  "private": true,
+  "devDependencies": {
+    "tsdown": "0.23.7",
+    "typescript": "7.1.0-beta"
+  }
+}

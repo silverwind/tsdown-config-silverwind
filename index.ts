@@ -23,7 +23,7 @@ function isSingleEntry(entry: UserConfig["entry"]): boolean {
     const keys = Object.keys(entry);
     return keys.length === 1 && !keys[0].includes("*");
   } else {
-    return typeof entry !== "string" || !/[*?(]|\[.*\]|\{[^}]*(?:,|\.\.)/.test(entry); // approximates tinyglobby's isDynamicPattern, which tsdown uses to expand entries
+    return typeof entry !== "string" || !/[*?(]|\[[^[\]]*\]|\{[^{}]*(?:,|\.\.)/.test(entry); // approximates tinyglobby's isDynamicPattern, which tsdown uses to expand entries
   }
 }
 
@@ -59,7 +59,11 @@ export function base({url, entry, report, loader, outputOptions, deps, checks, d
     suppressWarnings: /^TypeScript Go is experimental/, // rolldown-plugin-dts warns on every tsgo build
     checks: {pluginTimings: false, moduleLevelDirective: false, ...checks}, // "use client" in deps, https://github.com/rolldown/rolldown/issues/7809
     globImport: false,
-    dts: dts !== false && {generator: dtsGenerator(url), ...(isObject(dts) && dts)}, // tsc needs TypeScript 6 or below, tsgo 7.1 or above, oxc needs isolatedDeclarations-compatible code
+    dts: dts !== false && {
+      generator: dtsGenerator(url), // tsc needs TypeScript 6 or below, tsgo 7.1 or above, oxc needs isolatedDeclarations-compatible code
+      emitJs: false, // allowJs makes untyped node_modules JS unloadable, https://github.com/sxzz/rolldown-plugin-dts/issues/348
+      ...(isObject(dts) && dts),
+    },
     deps: {onlyBundle: false, ...deps}, // suppress hint about unintended bundling of dependencies
     ...other,
   };
@@ -86,5 +90,5 @@ export function webLib(config: CustomConfig): UserConfig {
 }
 
 export function nodeCli(config: CustomConfig): UserConfig {
-  return nodeLib({minify: true, ...config});
+  return nodeLib({minify: true, dts: false, ...config});
 }

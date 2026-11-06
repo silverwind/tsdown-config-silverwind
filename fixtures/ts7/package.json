@@ -1,0 +1,8 @@
+{
+  "name": "ts7",
+  "private": true,
+  "devDependencies": {
+    "tsdown": "0.23.7",
+    "typescript": "7.0.2"
+  }
+}
